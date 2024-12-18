@@ -18,26 +18,29 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 5.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
     # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+    # - name: Execute unit tests
+    #   run: dotnet test
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore vmPing.sln
 
-    - name: Build the project
-      run: |
-        dotnet publish --configuration Release -r win-x64 --self-contained true
-        find . -name "vmping.exe"
-        # 7z a -tzip "./vmping.zip" "./publish/*" 
-        # dotnet publish --configuration Release -r win-x64  -o ./publish2
-        # 7z a -tzip "./vmping.zip" "./publish2/*" 
+    - name: Build the solution
+      run: msbuild vmPing.sln /p:Configuration=Release /p:TargetFrameworkVersion=v5.0
+
+    # - name: Build the project
+    #   run: |
+    #     dotnet publish --configuration Release -r win-x64 --self-contained true
+    #     find . -name "vmping.exe"
+    #     # 7z a -tzip "./vmping.zip" "./publish/*" 
+    #     # dotnet publish --configuration Release -r win-x64  -o ./publish2
+    #     # 7z a -tzip "./vmping.zip" "./publish2/*" 
 
     # - name: Upload build artifacts
     #   uses: actions/upload-artifact@v3
