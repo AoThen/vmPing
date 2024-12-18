@@ -29,15 +29,19 @@ jobs:
     #   run: dotnet test
 
     - name: Install dependencies
-      run: dotnet restore vmPing.sln
+      run: dotnet restore
 
-    - name: Build the solution
-      run: msbuild vmPing.sln /p:Configuration=Release /p:TargetFrameworkVersion=v5.0
+    
+    # - name: Build
+    #   run: dotnet build --no-restore
 
-    # - name: Build the project
-    #   run: |
-    #     dotnet publish --configuration Release -r win-x64 --self-contained true
-    #     find . -name "vmping.exe"
+    # - name: Build the solution
+    #   run: msbuild vmPing.sln /p:Configuration=Release /p:TargetFrameworkVersion=v5.0  -property:Platform=x64
+
+    - name: Build the project
+      run: |
+        dotnet publish --configuration Release -r win-x64 --self-contained true
+        find . -name "vmping.exe"
     #     # 7z a -tzip "./vmping.zip" "./publish/*" 
     #     # dotnet publish --configuration Release -r win-x64  -o ./publish2
     #     # 7z a -tzip "./vmping.zip" "./publish2/*" 
