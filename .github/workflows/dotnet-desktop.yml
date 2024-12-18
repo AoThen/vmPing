@@ -36,11 +36,13 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Build
-      run: dotnet build --no-restore
+    # - name: Build
+    #   run: dotnet build --no-restore
 
-    # - name: Build the solution
-    #   run: msbuild vmPing.sln /p:Configuration=Release /p:TargetFrameworkVersion=v5.0  -property:Platform=x64
+    - name: Build the solution
+      run: |
+        msbuild vmPing.sln /p:Configuration=Release -property:Platform=x64
+        find . -name "vmping.exe"
 
     # - name: Build the project
     #   run: |
